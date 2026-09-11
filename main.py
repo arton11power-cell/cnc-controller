@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""CNC Controller - Desktop Application"""
+"""CNC Controller - Desktop Application for 5-Axis Machine"""
 
 import sys
 from PyQt5.QtWidgets import QApplication
@@ -9,8 +9,11 @@ from ui.main_window import MainWindow
 def main():
     """Application entry point"""
     app = QApplication(sys.argv)
+    app.setStyle('Fusion')
+    
     window = MainWindow()
     window.show()
+    
     sys.exit(app.exec_())
 
 
