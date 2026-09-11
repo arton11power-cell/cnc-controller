@@ -1,0 +1,71 @@
+# Quartus Project Settings for EP4CE6E22
+
+set_global_assignment -name FAMILY "Cyclone IV E"
+set_global_assignment -name DEVICE EP4CE6E22C8
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 21.1
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "Fri Sep 11 2024 18:00:00"
+set_global_assignment -name LAST_QUARTUS_VERSION 21.1
+set_global_assignment -name VHDL_FILE rtl/top.vhd
+set_global_assignment -name VHDL_FILE rtl/pulse_generator.vhd
+set_global_assignment -name VHDL_FILE rtl/uart_interface.vhd
+set_global_assignment -name VHDL_FILE rtl/command_decoder.vhd
+set_global_assignment -name VHDL_FILE rtl/pwm_controller.vhd
+set_global_assignment -name VHDL_FILE rtl/status_monitor.vhd
+
+# Clock input
+set_location_assignment PIN_23 -to clk
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to clk
+
+# Reset input
+set_location_assignment PIN_2 -to rst_n
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to rst_n
+
+# UART interface
+set_location_assignment PIN_25 -to uart_rx
+set_location_assignment PIN_26 -to uart_tx
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to uart_rx
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to uart_tx
+
+# Motor outputs (5 axes)
+set_location_assignment PIN_3 -to step_x
+set_location_assignment PIN_4 -to dir_x
+set_location_assignment PIN_5 -to step_y
+set_location_assignment PIN_6 -to dir_y
+set_location_assignment PIN_7 -to step_z
+set_location_assignment PIN_8 -to dir_z
+set_location_assignment PIN_9 -to step_a
+set_location_assignment PIN_10 -to dir_a
+set_location_assignment PIN_11 -to step_b
+set_location_assignment PIN_12 -to dir_b
+
+for {set i 0} {$i < 10} {incr i} {
+    set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to [lindex {step_x dir_x step_y dir_y step_z dir_z step_a dir_a step_b dir_b} $i]
+}
+
+# Sensor inputs (endstops)
+set_location_assignment PIN_13 -to endstop_x
+set_location_assignment PIN_14 -to endstop_y
+set_location_assignment PIN_15 -to endstop_z
+set_location_assignment PIN_16 -to endstop_a
+set_location_assignment PIN_17 -to endstop_b
+
+for {set i 0} {$i < 5} {incr i} {
+    set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to [lindex {endstop_x endstop_y endstop_z endstop_a endstop_b} $i]
+}
+
+# PWM outputs
+set_location_assignment PIN_19 -to pwm_spindle
+set_location_assignment PIN_20 -to pwm_cool
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to pwm_spindle
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to pwm_cool
+
+# Status LED
+set_location_assignment PIN_21 -to led_status
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to led_status
+
+# Compile options
+set_global_assignment -name OPTIMIZATION_TECHNIQUE BALANCED
+set_global_assignment -name DEVICE_FILTER_PACKAGE TQFP
+set_global_assignment -name TOP_LEVEL_ENTITY top
+set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (VHDL)"
+set_global_assignment -name EDA_TIME_SCALE "1 ps" -section_id eda_simulation
